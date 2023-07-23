@@ -1,6 +1,7 @@
 package com.app.blogapi.services.serviceimplementation;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -17,7 +18,7 @@ public class UserServiceImplementation implements UserService{
 
     @Override
     public UserDto createUser(UserDto userDto) {
-        // TODO Auto-generated method stub
+
 
         User user= userDtoToUser(userDto);
         User savedUser= userRepository.save(user);
@@ -27,26 +28,37 @@ public class UserServiceImplementation implements UserService{
 
     @Override
     public UserDto getUserById(int id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getUserById'");
+
+        User userById= userRepository.findById(id).get();
+        return userToUserDto(userById);
     }
 
     @Override
     public List<UserDto> getAllUsers() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getAllUsers'");
+      
+        List<User> users= userRepository.findAll();
+        List<UserDto> userDtos= users.stream().map(singleUser->userToUserDto(singleUser)).collect(Collectors.toList());
+
+        return userDtos;
+
     }
 
     @Override
     public UserDto updateUser(UserDto userDto, int id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'updateUser'");
+        
+        
+        User  updateUser = userDtoToUser(userDto);
+        updateUser.setId(id);
+
+        updateUser= userRepository.save(updateUser);
+        return userToUserDto(updateUser);
     }
 
     @Override
-    public UserDto deleteUser(int id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'deleteUser'");
+    public void deleteUser(int id) {
+
+            userRepository.deleteById(id);
+
     }
 
     private User userDtoToUser(UserDto userDto){
