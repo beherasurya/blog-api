@@ -3,8 +3,15 @@ package com.app.blogapi.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.app.blogapi.payloads.UserDto;
@@ -19,10 +26,38 @@ public class UserController {
 
 
     @GetMapping("/users")
-    
+    @ResponseStatus(HttpStatus.FOUND)
     public List<UserDto> getAllUsers(){
 
         return userService.getAllUsers();
+    }
+
+    @GetMapping("/users/{id}")
+    @ResponseStatus(HttpStatus.FOUND)
+    public UserDto getUserById(@PathVariable int id){
+
+        return userService.getUserById(id);
+
+    }
+
+    @PutMapping("/users/{id}")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public UserDto updateUser(@PathVariable int id, UserDto userDto){
+
+        return userService.updateUser(userDto, id);
+
+    }
+    
+    @PostMapping("/users")
+    @ResponseStatus(HttpStatus.CREATED)
+    public UserDto createUser(@RequestBody UserDto userDto){
+        return userService.createUser(userDto);
+    }
+    @DeleteMapping("/users/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteUser(int id){
+
+        userService.deleteUser(id);
     }
 
 }
