@@ -17,7 +17,7 @@ public class UserServiceImplementation implements UserService{
 
 
     @Autowired
-    UserRepository userRepository ;
+    private UserRepository userRepository ;
 
     @Override
     public UserDto createUser(UserDto userDto) {

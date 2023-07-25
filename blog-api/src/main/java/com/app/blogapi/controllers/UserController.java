@@ -22,7 +22,7 @@ import com.app.blogapi.services.UserService;
 public class UserController {
     
     @Autowired
-    UserService userService;
+    private UserService userService;
 
 
     @GetMapping("/users")
