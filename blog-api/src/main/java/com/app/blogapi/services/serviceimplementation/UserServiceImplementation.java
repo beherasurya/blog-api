@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.app.blogapi.entities.User;
+import com.app.blogapi.exceptions.ResourceNotFoundException;
 import com.app.blogapi.payloads.UserDto;
 import com.app.blogapi.repositories.UserRepository;
 import com.app.blogapi.services.UserService;
@@ -29,6 +30,12 @@ public class UserServiceImplementation implements UserService{
     @Override
     public UserDto getUserById(int id) {
 
+        if (userRepository.findById(id) == null) {
+
+            throw new ResourceNotFoundException(id);
+            
+        }
+
         User userById= userRepository.findById(id).get();
         return userToUserDto(userById);
     }
@@ -36,6 +43,12 @@ public class UserServiceImplementation implements UserService{
     @Override
     public List<UserDto> getAllUsers() {
       
+        if (userRepository.findAll() == null) {
+
+            throw new ResourceNotFoundException();
+            
+        }
+
         List<User> users= userRepository.findAll();
         List<UserDto> userDtos= users.stream().map(singleUser->userToUserDto(singleUser)).collect(Collectors.toList());
 
@@ -46,6 +59,11 @@ public class UserServiceImplementation implements UserService{
     @Override
     public UserDto updateUser(UserDto userDto, int id) {
         
+         if (userRepository.findById(id) == null) {
+
+            throw new ResourceNotFoundException(id);
+            
+        }
         
         User  updateUser = userDtoToUser(userDto);
         updateUser.setId(id);
@@ -56,6 +74,12 @@ public class UserServiceImplementation implements UserService{
 
     @Override
     public void deleteUser(int id) {
+
+         if (userRepository.findById(id) == null) {
+
+            throw new ResourceNotFoundException(id);
+            
+        }
 
             userRepository.deleteById(id);
 
