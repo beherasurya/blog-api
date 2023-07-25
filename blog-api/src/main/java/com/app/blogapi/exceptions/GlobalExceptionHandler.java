@@ -2,6 +2,7 @@ package com.app.blogapi.exceptions;
 
 import java.util.stream.Collectors;
 
+import org.apache.tomcat.util.json.JSONParser;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -9,6 +10,11 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.app.blogapi.payloads.ApiResponse;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.util.JSONPObject;
+
+import netscape.javascript.JSObject;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -23,15 +29,17 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    ResponseEntity<String> handleMethodArgumentNotValidException(MethodArgumentNotValidException exception){
+    ResponseEntity<ApiResponse> handleMethodArgumentNotValidException(MethodArgumentNotValidException exception){
 
         // ApiResponse apiResponse = new ApiResponse("Please give Valid input for the  attributes", false);
 
         String apiResponse = exception.getFieldErrors().stream()
-        .map(fieldError -> fieldError.getField() + " : "+
-        fieldError.getDefaultMessage()).collect(Collectors.joining("\n"));
+        .map(fieldError -> fieldError.getField() + " - "+fieldError.getDefaultMessage()).collect(Collectors.joining(" , "));
 
-        return new ResponseEntity<String>(apiResponse, HttpStatus.NOT_ACCEPTABLE);
+
+        
+        ApiResponse apiResponse2 = new ApiResponse(apiResponse, false);
+        return new ResponseEntity<ApiResponse>(apiResponse2, HttpStatus.NOT_ACCEPTABLE);
 
     }
 

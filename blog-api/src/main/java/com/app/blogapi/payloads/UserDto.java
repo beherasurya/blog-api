@@ -16,17 +16,17 @@ import lombok.Setter;
 public class UserDto {
     
     @NotEmpty
-    @Size(min = 3, max=20, message = "Name Should not be empty")
+    @Size(min = 3, max=20, message = "give valid name")
     private String name;
 
     private int id;
     
     @NotEmpty
-    @Email(message = "Provide Valid Email address")
+    @Email(message = "give valid email")
     private String email;
 
     @NotEmpty
-    @Size(min = 3, max =15, message = "Provide a Strong password")
+    @Size(min = 3, max =15, message = "give valid password")
     private String password;
 
     @NotEmpty
