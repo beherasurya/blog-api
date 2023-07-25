@@ -3,6 +3,7 @@ package com.app.blogapi.services.serviceimplementation;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +19,8 @@ public class UserServiceImplementation implements UserService{
 
     @Autowired
     private UserRepository userRepository ;
+    @Autowired
+    private ModelMapper modelMapper;
 
     @Override
     public UserDto createUser(UserDto userDto) {
@@ -91,26 +94,20 @@ public class UserServiceImplementation implements UserService{
 
     private User userDtoToUser(UserDto userDto){
 
-        User user = new User();
-        user.setName(userDto.getName());
+        User user = modelMapper.map(userDto, User.class);
+       /* user.setName(userDto.getName());
 
         user.setEmail(userDto.getEmail());
         user.setAbout(userDto.getAbout());
 
         user.setPassword(userDto.getPassword());
-        user.setId(userDto.getId());
+        user.setId(userDto.getId());*/
         return user;
     }
     private UserDto userToUserDto(User user){
 
-        UserDto userDto =new UserDto();
-        userDto.setName(user.getName());
-
-        userDto.setEmail(user.getEmail());
-        userDto.setAbout(user.getAbout());
-
-        userDto.setPassword(user.getPassword());
-        userDto.setId(user.getId());
+        UserDto userDto =modelMapper.map(user, UserDto.class);
+        
         return userDto;
     }
     
