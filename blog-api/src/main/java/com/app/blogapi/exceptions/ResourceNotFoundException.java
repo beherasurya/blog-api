@@ -1,14 +1,22 @@
 package com.app.blogapi.exceptions;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class ResourceNotFoundException extends RuntimeException {
     
-    public ResourceNotFoundException(int id){
+    
+    private String message;
+    private int id;
 
-        System.out.println("This resource id is not found in the Database: "+id);
-    }
-
-    public ResourceNotFoundException(){
-        System.out.println("Resource Not Found");
+    public ResourceNotFoundException(String message){
+        this.message = message;
     }
 
 }
