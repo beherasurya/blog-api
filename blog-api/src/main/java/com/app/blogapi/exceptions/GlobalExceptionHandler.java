@@ -2,7 +2,6 @@ package com.app.blogapi.exceptions;
 
 import java.util.stream.Collectors;
 
-import org.apache.tomcat.util.json.JSONParser;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -10,11 +9,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.app.blogapi.payloads.ApiResponse;
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.databind.util.JSONPObject;
 
-import netscape.javascript.JSObject;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
