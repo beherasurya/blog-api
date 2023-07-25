@@ -1,5 +1,7 @@
 package com.app.blogapi.exceptions;
 
+import java.util.stream.Collectors;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -21,10 +23,15 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    ResponseEntity<ApiResponse> handleMethodArgumentNotValidException(){
+    ResponseEntity<String> handleMethodArgumentNotValidException(MethodArgumentNotValidException exception){
 
-        ApiResponse apiResponse = new ApiResponse("Please give Valid input for the  attributes", false);
-        return new ResponseEntity<ApiResponse>(apiResponse, HttpStatus.NOT_ACCEPTABLE);
+        // ApiResponse apiResponse = new ApiResponse("Please give Valid input for the  attributes", false);
+
+        String apiResponse = exception.getFieldErrors().stream()
+        .map(fieldError -> fieldError.getField() + " : "+
+        fieldError.getDefaultMessage()).collect(Collectors.joining("\n"));
+
+        return new ResponseEntity<String>(apiResponse, HttpStatus.NOT_ACCEPTABLE);
 
     }
 
