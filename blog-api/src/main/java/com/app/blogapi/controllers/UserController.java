@@ -26,14 +26,14 @@ public class UserController {
 
 
     @GetMapping("/users")
-    @ResponseStatus(HttpStatus.FOUND)
+    @ResponseStatus(HttpStatus.OK)
     public List<UserDto> getAllUsers(){
 
         return userService.getAllUsers();
     }
 
     @GetMapping("/users/{id}")
-    @ResponseStatus(HttpStatus.FOUND)
+    @ResponseStatus(HttpStatus.OK)
     public UserDto getUserById(@PathVariable int id){
 
         return userService.getUserById(id);
@@ -42,7 +42,7 @@ public class UserController {
 
     @PutMapping("/users/{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public UserDto updateUser(@PathVariable int id, UserDto userDto){
+    public UserDto updateUser(@PathVariable int id, @RequestBody UserDto userDto){
 
         return userService.updateUser(userDto, id);
 
@@ -55,9 +55,9 @@ public class UserController {
     }
     @DeleteMapping("/users/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public void deleteUser(int id){
+    public String deleteUser(@PathVariable int id){
 
-        userService.deleteUser(id);
+       return userService.deleteUser(id);
     }
 
 }

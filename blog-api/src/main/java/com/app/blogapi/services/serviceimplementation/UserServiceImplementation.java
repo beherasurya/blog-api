@@ -32,7 +32,7 @@ public class UserServiceImplementation implements UserService{
     @Override
     public UserDto getUserById(int id) {
 
-        if (userRepository.findById(id) == null) {
+        if (userRepository.findById(id).isEmpty()) {
 
             throw new ResourceNotFoundException(id);
             
@@ -45,7 +45,7 @@ public class UserServiceImplementation implements UserService{
     @Override
     public List<UserDto> getAllUsers() {
       
-        if (userRepository.findAll() == null) {
+        if (userRepository.findAll().isEmpty()) {
 
             throw new ResourceNotFoundException();
             
@@ -61,7 +61,7 @@ public class UserServiceImplementation implements UserService{
     @Override
     public UserDto updateUser(UserDto userDto, int id) {
         
-         if (userRepository.findById(id) == null) {
+         if (userRepository.findById(id).isEmpty()) {
 
             throw new ResourceNotFoundException(id);
             
@@ -75,15 +75,17 @@ public class UserServiceImplementation implements UserService{
     }
 
     @Override
-    public void deleteUser(int id) {
+    public String deleteUser(int id) {
 
-         if (userRepository.findById(id) == null) {
+         if (userRepository.findById(id).isEmpty()) {
 
             throw new ResourceNotFoundException(id);
             
-        }
+            }
 
             userRepository.deleteById(id);
+            return "User Details Deleted from the Database";
+            
 
     }
 
@@ -96,6 +98,7 @@ public class UserServiceImplementation implements UserService{
         user.setAbout(userDto.getAbout());
 
         user.setPassword(userDto.getPassword());
+        user.setId(userDto.getId());
         return user;
     }
     private UserDto userToUserDto(User user){
@@ -107,6 +110,7 @@ public class UserServiceImplementation implements UserService{
         userDto.setAbout(user.getAbout());
 
         userDto.setPassword(user.getPassword());
+        userDto.setId(user.getId());
         return userDto;
     }
     
