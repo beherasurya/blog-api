@@ -34,7 +34,7 @@ public class UserServiceImplementation implements UserService{
 
         if (userRepository.findById(id).isEmpty()) {
 
-            throw new ResourceNotFoundException("Resource Not Found",id);
+            throw new ResourceNotFoundException("Resource Not Found to fetch the User",id);
             
         }
 
@@ -47,7 +47,7 @@ public class UserServiceImplementation implements UserService{
       
         if (userRepository.findAll().isEmpty()) {
 
-            throw new ResourceNotFoundException("Resource Not Found");
+            throw new ResourceNotFoundException("Resource Not Found to fetch user data");
             
         }
 
@@ -63,7 +63,7 @@ public class UserServiceImplementation implements UserService{
         
          if (userRepository.findById(id).isEmpty()) {
 
-            throw new ResourceNotFoundException("Resource Not Found",id);
+            throw new ResourceNotFoundException("Resource Not Found to update User Details",id);
             
         }
         
@@ -79,7 +79,7 @@ public class UserServiceImplementation implements UserService{
 
          if (userRepository.findById(id).isEmpty()) {
 
-            throw new ResourceNotFoundException("Resource Not Found",id);
+            throw new ResourceNotFoundException("Resource Not Found to Delete User",id);
             
             }
 
