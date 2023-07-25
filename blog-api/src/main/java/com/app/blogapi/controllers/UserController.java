@@ -2,6 +2,8 @@ package com.app.blogapi.controllers;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -42,7 +44,7 @@ public class UserController {
 
     @PutMapping("/users/{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public UserDto updateUser(@PathVariable int id, @RequestBody UserDto userDto){
+    public UserDto updateUser(@Valid @PathVariable int id, @RequestBody UserDto userDto){
 
         return userService.updateUser(userDto, id);
 
@@ -50,9 +52,10 @@ public class UserController {
     
     @PostMapping("/users")
     @ResponseStatus(HttpStatus.CREATED)
-    public UserDto createUser(@RequestBody UserDto userDto){
+    public UserDto createUser(@Valid @RequestBody UserDto userDto){
         return userService.createUser(userDto);
     }
+
     @DeleteMapping("/users/{id}")
     @ResponseStatus(HttpStatus.OK)
     public String deleteUser(@PathVariable int id){
