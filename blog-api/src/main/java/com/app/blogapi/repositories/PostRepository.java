@@ -10,6 +10,6 @@ import com.app.blogapi.entities.User;
 
 public interface PostRepository extends JpaRepository<Post,Integer> {
     
-    List<Post> getAllPostByUser(User user);
-    List<Post> getAllPostByCategory(Category category);
+    List<Post> findPostByUser(User user);
+    List<Post> findPostByCategory(Category category);
 }

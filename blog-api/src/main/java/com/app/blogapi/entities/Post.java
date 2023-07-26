@@ -34,7 +34,7 @@ public class Post {
     @NotBlank
     private String title;
 
-    @Size(min = 10, message = "Minimun 10 characters required")
+    @Size( message = "Minimun 10 characters required")
     private String content;
 
     private String imageName;

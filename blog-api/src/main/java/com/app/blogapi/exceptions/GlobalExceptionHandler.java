@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -48,6 +49,13 @@ public class GlobalExceptionHandler {
                 
         return new ResponseEntity<Map<String,String>>(apiResponse, HttpStatus.NOT_ACCEPTABLE);
 
+    }
+
+    @ExceptionHandler(  HttpMessageNotReadableException.class)
+    ResponseEntity<ApiResponse> handleRequestBodyMissingException(HttpMessageNotReadableException exception){
+
+         ApiResponse apiResponse = new ApiResponse("Request Body is Missing",false);
+        return new ResponseEntity<ApiResponse>(apiResponse, HttpStatus.NOT_ACCEPTABLE);
     }
 
 
