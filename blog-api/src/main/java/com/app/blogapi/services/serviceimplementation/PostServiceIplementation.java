@@ -62,12 +62,7 @@ public class PostServiceIplementation implements PostService  {
         throw new UnsupportedOperationException("Unimplemented method 'getAllPost'");
     }
 
-    @Override
-    public PostDto getPostById() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getPostById'");
-    }
-
+  
     @Override
     public PostDto updatePost(int id, PostDto postDto) {
         // TODO Auto-generated method stub
@@ -78,6 +73,30 @@ public class PostServiceIplementation implements PostService  {
     public ApiResponse deletePost(int id) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'deletePost'");
+    }
+
+    @Override
+    public PostDto getPostById(int postId) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getPostById'");
+    }
+
+    @Override
+    public List<PostDto> getPostsByUser(int userId) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getPostsByUser'");
+    }
+
+    @Override
+    public List<PostDto> getPostsByCategory(int categoryId) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getPostsByCategory'");
+    }
+
+    @Override
+    public List<PostDto> searchPost(String keyword) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'searchPost'");
     }
     
 }

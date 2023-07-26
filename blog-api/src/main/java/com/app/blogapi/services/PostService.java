@@ -10,8 +10,12 @@ public interface PostService {
    PostDto createPost(PostDto postDto, int userId, int categoryId);
    List<PostDto> getAllPost();
 
-   PostDto getPostById();
+   PostDto getPostById(int postId);
    PostDto updatePost(int id, PostDto postDto);
 
    ApiResponse deletePost(int id);
+   List<PostDto> getPostsByUser(int userId);
+
+   List<PostDto> getPostsByCategory(int categoryId);
+   List<PostDto> searchPost(String keyword);
 }
