@@ -27,7 +27,7 @@ public class CategoryServiceImplementation implements CategoryService{
     @Override
     public ResponseEntity<List<CategoryDto>> getAllCategory() {
        if(categoryRepository.findAll().isEmpty()){
-            throw new ResourceNotFoundException("No Resource  found in the Database");
+            throw new ResourceNotFoundException("No Category  found in the Database");
        } 
 
         List<Category> category = categoryRepository.findAll();
@@ -44,7 +44,7 @@ public class CategoryServiceImplementation implements CategoryService{
     public ResponseEntity<CategoryDto> getCategoryById(int id) {
         
         Category category = categoryRepository.findById(id)
-        .orElseThrow(()-> new ResourceNotFoundException("Resource you are trying to fetch is not found", id));
+        .orElseThrow(()-> new ResourceNotFoundException("Category you are trying to fetch is not found", id));
     
         return new ResponseEntity<CategoryDto>
         ( modelMapper.map(category, CategoryDto.class), HttpStatus.OK);
@@ -62,7 +62,7 @@ public class CategoryServiceImplementation implements CategoryService{
     @Override
     public ResponseEntity<CategoryDto> updateCategory(int id, CategoryDto categoryDto) {
       if(categoryRepository.findById(id).isEmpty()){
-        throw new ResourceNotFoundException("Resource you are trying to update is not Found", id);
+        throw new ResourceNotFoundException("Category you are trying to update is not Found", id);
       }
 
         categoryDto.setCategoryId(id);
@@ -77,7 +77,7 @@ public class CategoryServiceImplementation implements CategoryService{
     @Override
     public ResponseEntity<ApiResponse> deleteCategory(int id) {
         if(categoryRepository.findById(id).isEmpty()){
-            throw new ResourceNotFoundException("Resource you are trying to delete is not Found ", id);
+            throw new ResourceNotFoundException("Category you are trying to delete is not Found ", id);
         }
 
         categoryRepository.deleteById(id);
