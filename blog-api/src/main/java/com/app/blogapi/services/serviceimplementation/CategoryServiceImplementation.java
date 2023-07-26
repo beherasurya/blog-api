@@ -30,11 +30,12 @@ public class CategoryServiceImplementation implements CategoryService{
        } 
 
         List<Category> category = categoryRepository.findAll();
-        List<CategoryDto> categoryDto = category.stream().map(record ->modelMapper.map(category,CategoryDto.class))
+        List<CategoryDto> categoryDto = category.stream()
+        .map(record ->modelMapper.map(record,CategoryDto.class))
                 .collect(Collectors.toList());
 
 
-        return new ResponseEntity<List<CategoryDto>>(categoryDto, HttpStatus.FOUND);
+        return new ResponseEntity<List<CategoryDto>>(categoryDto, HttpStatus.OK);
        
     }
 
@@ -45,7 +46,7 @@ public class CategoryServiceImplementation implements CategoryService{
         .orElseThrow(()-> new ResourceNotFoundException("Resource you are trying to fetch is not found", id));
     
         return new ResponseEntity<CategoryDto>
-        ( modelMapper.map(category, CategoryDto.class), HttpStatus.FOUND);
+        ( modelMapper.map(category, CategoryDto.class), HttpStatus.OK);
     }
 
     @Override
