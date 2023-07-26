@@ -2,6 +2,7 @@ package com.app.blogapi.services.serviceimplementation;
 
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,45 +59,100 @@ public class PostServiceIplementation implements PostService  {
 
     @Override
     public List<PostDto> getAllPost() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getAllPost'");
+        
+        List<Post> post= postRepository.findAll();
+        List<PostDto> postDto = post.stream()
+        .map((element)->modelMapper.map(element, PostDto.class))
+        .collect(Collectors.toList());
+
+        return postDto;
     }
 
   
     @Override
     public PostDto updatePost(int id, PostDto postDto) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'updatePost'");
+        Post updatePost = postRepository.findById(id)
+                .orElseThrow(()->new ResourceNotFoundException("Post Not Found", id));
+        
+        updatePost.setPostId(id);
+        updatePost.setTitle(postDto.getTitle());
+
+        updatePost.setContent(postDto.getContent());
+        updatePost = postRepository.save(updatePost);
+
+        return modelMapper.map(updatePost, PostDto.class);
+
     }
 
     @Override
     public ApiResponse deletePost(int id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'deletePost'");
+        
+        
+             postRepository.findById(id)
+            .orElseThrow(()-> new ResourceNotFoundException("Post you are trying to Delete Not Found", id));
+
+        return new ApiResponse("Post Deleted Successfully", true);
     }
 
     @Override
     public PostDto getPostById(int postId) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getPostById'");
+        
+        Post post = postRepository.findById(postId)
+            .orElseThrow(()->new ResourceNotFoundException("Post Not Found", postId));
+
+        PostDto postDto = modelMapper.map(post, PostDto.class);
+        return postDto;
     }
 
     @Override
-    public List<PostDto> getPostsByUser(int userId) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getPostsByUser'");
-    }
+    public List<PostDto> getPostsByUserId(int userId) {
+        
+        User user = userRepository.findById(userId)
+                    .orElseThrow(()->new ResourceNotFoundException("User Not Found", userId));
+
+        if(postRepository.findPostByUser(user).isEmpty()){
+            throw new ResourceNotFoundException("Post Not Found", userId);
+        }
+
+         List<Post> userPosts = postRepository.findPostByUser(user);            
+        List<PostDto> postDtos = userPosts.stream()
+        .map((postElement)->modelMapper.map(postElement, PostDto.class))
+        .collect(Collectors.toList());
+
+        return postDtos;
+   }
 
     @Override
     public List<PostDto> getPostsByCategory(int categoryId) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getPostsByCategory'");
+        Category category = categoryRepository.findById(categoryId)
+                    .orElseThrow(()->new ResourceNotFoundException("Category Not Found", categoryId));
+        
+        if(postRepository.findPostByCategory(category).isEmpty()){
+            throw new ResourceNotFoundException("Post Not Found", categoryId);
+        }
+
+        List<Post> postsByCategoryId = postRepository.findPostByCategory(category);
+        List<PostDto> postDtosByCategoryId = postsByCategoryId.stream()
+                    .map((postElement)->modelMapper.map(postElement, PostDto.class))
+                    .collect(Collectors.toList());
+        
+        return postDtosByCategoryId;
     }
 
     @Override
     public List<PostDto> searchPost(String keyword) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'searchPost'");
+        
+        if(postRepository.findByTitle(keyword).isEmpty()){
+            throw new ResourceNotFoundException("Post Not Found");
+        }
+
+        List<Post> posts= postRepository.findByTitle(keyword);
+        List<PostDto> postDtos = posts.stream()
+            .map((postElement)->modelMapper.map(postElement, PostDto.class))
+            .collect(Collectors.toList());
+
+        return postDtos;
+
     }
     
 }

@@ -2,8 +2,7 @@ package com.app.blogapi.payloads;
 
 import java.util.Date;
 
-import com.app.blogapi.entities.Category;
-import com.app.blogapi.entities.User;
+
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,6 +13,8 @@ import lombok.Setter;
 @NoArgsConstructor
 public class PostDto {
     
+    private int postId;
+
     private String title;
     private String content;
 
