@@ -24,11 +24,9 @@ public class Category {
     private int categoryId;
 
     @Column(name = "title", nullable = false)
-    @NotEmpty
     private String categoryTitle;
 
     @Column(name = "description", nullable = false)
-    @NotEmpty
     private String categoryDescription;
 
 }
