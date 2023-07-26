@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.http.ResponseEntity;
 
+import com.app.blogapi.payloads.ApiResponse;
 import com.app.blogapi.payloads.CategoryDto;
 
 public interface CategoryService {
@@ -14,5 +15,5 @@ public interface CategoryService {
     ResponseEntity<CategoryDto> createCategory(CategoryDto categoryDto);
     ResponseEntity<CategoryDto> updateCategory(int id, CategoryDto categoryDto);
 
-    ResponseEntity<String> deleteCategory(int id);
+    ResponseEntity<ApiResponse> deleteCategory(int id);
 }

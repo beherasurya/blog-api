@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.app.blogapi.entities.Category;
 import com.app.blogapi.exceptions.ResourceNotFoundException;
+import com.app.blogapi.payloads.ApiResponse;
 import com.app.blogapi.payloads.CategoryDto;
 import com.app.blogapi.repositories.CategoryRepository;
 import com.app.blogapi.services.CategoryService;
@@ -74,13 +75,15 @@ public class CategoryServiceImplementation implements CategoryService{
     }
 
     @Override
-    public ResponseEntity<String> deleteCategory(int id) {
+    public ResponseEntity<ApiResponse> deleteCategory(int id) {
         if(categoryRepository.findById(id).isEmpty()){
             throw new ResourceNotFoundException("Resource you are trying to delete is not Found ", id);
         }
 
         categoryRepository.deleteById(id);
-        return new ResponseEntity<String>("Resource Deleted for ID : "+id,HttpStatus.OK);
+        ApiResponse apiResponse = new ApiResponse("Resource Deleted for ID : "+id, true);
+        
+        return new ResponseEntity<ApiResponse>(apiResponse,HttpStatus.OK);
 
 
     }

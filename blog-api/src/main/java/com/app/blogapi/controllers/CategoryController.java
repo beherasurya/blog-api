@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.app.blogapi.payloads.ApiResponse;
 import com.app.blogapi.payloads.CategoryDto;
 import com.app.blogapi.services.CategoryService;
 
@@ -48,7 +49,7 @@ public class CategoryController {
     }
 
     @DeleteMapping("/category/{id}")
-    public ResponseEntity<String> deleteCategory(@PathVariable int id){
+    public ResponseEntity<ApiResponse> deleteCategory(@PathVariable int id){
 
         return categoryService.deleteCategory(id);
     }
