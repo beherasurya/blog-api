@@ -45,20 +45,39 @@ public class PostController {
         return new ResponseEntity<PostResponse>(postResponse, HttpStatus.OK);
     }
 
-
     @GetMapping("/post/user/{userId}")
     public ResponseEntity<List<PostDto>> getPostsByUserId(@PathVariable int userId){
+        List<PostDto> postDtos = postService.getPostsByUserId(userId);
+        return new ResponseEntity<List<PostDto>>(postDtos, HttpStatus.OK);
 
-        List<PostDto> postsByUser = postService.getPostsByUserId(userId);
-        return new ResponseEntity<List<PostDto>>(postsByUser, HttpStatus.OK);
     }
-
-    @GetMapping("/post/category/{categoryId}")
+     @GetMapping("/post/category/{categoryId}")
     public ResponseEntity<List<PostDto>> getPostByCategoryId(@PathVariable int categoryId){
+        List<PostDto> postDtos = postService.getPostsByCategory(categoryId);
+        return new ResponseEntity<List<PostDto>>(postDtos, HttpStatus.OK);
 
-        List<PostDto> postsByCategoryId = postService.getPostsByCategory(categoryId);
-        return new ResponseEntity<List<PostDto>>(postsByCategoryId, HttpStatus.OK);
     }
+    // @GetMapping("/post/user/{userId}")
+    // public ResponseEntity<PostResponse> getPostsByUserId
+    // (@PathVariable int userId,
+    // @RequestParam(defaultValue = "0" ,required = false) int pageNumber,
+    // @RequestParam(defaultValue = "5", required = false) int pageSize
+    // ){
+
+    //     PostResponse postsByUser = postService.getPostsByUserId(userId,pageNumber,pageSize);
+    //     return new ResponseEntity<PostResponse>(postsByUser, HttpStatus.OK);
+    // }
+
+    // @GetMapping("/post/category/{categoryId}")
+    // public ResponseEntity<PostResponse> getPostByCategoryId(
+    //     @PathVariable int categoryId,
+    //     @RequestParam(defaultValue = "0" ,required = false) int pageNumber,
+    //     @RequestParam(defaultValue = "5", required = false) int pageSize
+    //     ){
+
+    //      PostResponse postsByCategoryId = postService.getPostsByCategory(categoryId,pageNumber,pageSize);
+    //      return new ResponseEntity<PostResponse>(postsByCategoryId, HttpStatus.OK);
+    //  }
 
     @PutMapping("/post/{id}")
     public ResponseEntity<PostDto> updatePost(@PathVariable int id,@RequestBody PostDto postDto){

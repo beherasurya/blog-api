@@ -129,6 +129,9 @@ public class PostServiceIplementation implements PostService  {
     @Override
     public List<PostDto> getPostsByUserId(int userId) {
         
+       
+        
+
         User user = userRepository.findById(userId)
                     .orElseThrow(()->new ResourceNotFoundException("User Not Found", userId));
 
@@ -136,7 +139,8 @@ public class PostServiceIplementation implements PostService  {
             throw new ResourceNotFoundException("Post Not Found", userId);
         }
 
-         List<Post> userPosts = postRepository.findPostByUser(user);            
+         List<Post> userPosts = postRepository.findPostByUser(user);
+       
         List<PostDto> postDtos = userPosts.stream()
         .map((postElement)->modelMapper.map(postElement, PostDto.class))
         .collect(Collectors.toList());
@@ -153,6 +157,7 @@ public class PostServiceIplementation implements PostService  {
             throw new ResourceNotFoundException("Post Not Found", categoryId);
         }
 
+        
         List<Post> postsByCategoryId = postRepository.findPostByCategory(category);
         List<PostDto> postDtosByCategoryId = postsByCategoryId.stream()
                     .map((postElement)->modelMapper.map(postElement, PostDto.class))
@@ -175,6 +180,53 @@ public class PostServiceIplementation implements PostService  {
 
         return postDtos;
 
+    }
+
+    @Override
+    public PostResponse getPostsByUserId(int userId, int pageNumber, int pageSize) {
+        Pageable page = PageRequest.of(pageNumber, pageSize);
+        Page<Post> pagePost = postRepository.findPostByUser(page);
+
+        List<Post> postPages = pagePost.getContent();
+        List<PostDto> postDtos = postPages.stream()
+            .map((object)->modelMapper.map(object, PostDto.class))
+            .collect(Collectors.toList());
+
+        PostResponse postResponse = new PostResponse();
+        postResponse.setContent(postDtos);
+
+        postResponse.setPageNumber(pagePost.getNumber());
+        postResponse.setPageSize(pagePost.getSize());
+
+        postResponse.setTotalElements(pagePost.getTotalElements());
+        postResponse.setTotalPages(pagePost.getTotalPages());
+
+        postResponse.setLastPage(pagePost.isLast());
+        return postResponse;
+    }
+
+    @Override
+    public PostResponse getPostsByCategory(int categoryId, int pageNumber, int pageSize) {
+        // Pageable page = PageRequest.of(pageNumber, pageSize);
+        // Page<Post> pagePost = postRepository.findPostByCateogry(page);
+
+        // List<Post> postPages = pagePost.getContent();
+        // List<PostDto> postDtos = postPages.stream()
+        //     .map((object)->modelMapper.map(object, PostDto.class))
+        //     .collect(Collectors.toList());
+
+        // PostResponse postResponse = new PostResponse();
+        // postResponse.setContent(postDtos);
+
+        // postResponse.setPageNumber(pagePost.getNumber());
+        // postResponse.setPageSize(pagePost.getSize());
+
+        // postResponse.setTotalElements(pagePost.getTotalElements());
+        // postResponse.setTotalPages(pagePost.getTotalPages());
+
+        // postResponse.setLastPage(pagePost.isLast());
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getPostsByCategory'");
     }
     
 }
