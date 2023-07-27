@@ -4,11 +4,12 @@ import java.util.List;
 
 import com.app.blogapi.payloads.ApiResponse;
 import com.app.blogapi.payloads.PostDto;
+import com.app.blogapi.payloads.PostResponse;
 
 public interface PostService {
     
    PostDto createPost(PostDto postDto, int userId, int categoryId);
-   List<PostDto> getAllPost(int pageNumber, int pageSize);
+   PostResponse getAllPost(int pageNumber, int pageSize);
 
    PostDto getPostById(int postId);
    PostDto updatePost(int id, PostDto postDto);
