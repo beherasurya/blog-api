@@ -8,7 +8,7 @@ import com.app.blogapi.payloads.PostDto;
 public interface PostService {
     
    PostDto createPost(PostDto postDto, int userId, int categoryId);
-   List<PostDto> getAllPost();
+   List<PostDto> getAllPost(int pageNumber, int pageSize);
 
    PostDto getPostById(int postId);
    PostDto updatePost(int id, PostDto postDto);
