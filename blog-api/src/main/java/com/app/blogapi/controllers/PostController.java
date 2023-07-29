@@ -57,19 +57,19 @@ public class PostController {
         return new ResponseEntity<List<PostDto>>(postDtos, HttpStatus.OK);
 
     }
-    // @GetMapping("/post/user/{userId}")
-    // public ResponseEntity<PostResponse> getPostsByUserId
-    // (@PathVariable int userId,
-    // @RequestParam(defaultValue = "0" ,required = false) int pageNumber,
-    // @RequestParam(defaultValue = "5", required = false) int pageSize
-    // ){
+    @GetMapping("/post/user/pagination/{userId}")
+    public ResponseEntity<PostResponse> getPostsByUserIdSorting
+    (@PathVariable int userId,
+    @RequestParam(defaultValue = "0" ,required = false) int pageNumber,
+    @RequestParam(defaultValue = "5", required = false) int pageSize
+    ){
 
-    //     PostResponse postsByUser = postService.getPostsByUserId(userId,pageNumber,pageSize);
-    //     return new ResponseEntity<PostResponse>(postsByUser, HttpStatus.OK);
-    // }
+        PostResponse postsByUser = postService.getPostsByUserId(userId,pageNumber,pageSize);
+        return new ResponseEntity<PostResponse>(postsByUser, HttpStatus.OK);
+    }
 
-    // @GetMapping("/post/category/{categoryId}")
-    // public ResponseEntity<PostResponse> getPostByCategoryId(
+    // @GetMapping("/post/category/pagination/{categoryId}")
+    // public ResponseEntity<PostResponse> getPostByCategoryIdSorting(
     //     @PathVariable int categoryId,
     //     @RequestParam(defaultValue = "0" ,required = false) int pageNumber,
     //     @RequestParam(defaultValue = "5", required = false) int pageSize
