@@ -182,61 +182,6 @@ public class PostServiceIplementation implements PostService  {
 
     }
 
-    @Override
-    public PostResponse getPostsByUserId(int userId, int pageNumber, int pageSize) {
-        Pageable page = PageRequest.of(pageNumber, pageSize);
-        // Page<Post> pagePost = postRepository.findPostByUser(page);
-
-        Page<Post> pagePost = postRepository.findAll(page);
-        List<Post> postPages = pagePost.getContent();
-
-        User user = userRepository.findById(userId).get();
-        List<Post> postsByUserId = postRepository.findPostByUser(user);
-
-       Page<Post> postOfPages = modelMapper.map(postsByUserId, Page.class);
-        List<Post> filterdPosts = postPages.stream()
-            .filter((post)->postsByUserId.contains(post))
-            .collect(Collectors.toList());
-        
-            List<PostDto> postDtos = filterdPosts.stream()
-            .map((object)->modelMapper.map(object, PostDto.class))
-            .collect(Collectors.toList());
-
-        PostResponse postResponse = new PostResponse();
-        postResponse.setContent(postDtos);
-
-        postResponse.setPageNumber(postOfPages.getNumber());
-        postResponse.setPageSize(postOfPages.getSize());
-
-        postResponse.setTotalElements(postOfPages.getTotalElements());
-        postResponse.setTotalPages(postOfPages.getTotalPages());
-
-        postResponse.setLastPage(postOfPages.isLast());
-        return postResponse;
-    }
-
-    @Override
-    public PostResponse getPostsByCategory(int categoryId, int pageNumber, int pageSize) {
-        // Pageable page = PageRequest.of(pageNumber, pageSize);
-        // Page<Post> pagePost = postRepository.fi;
-
-        // List<Post> postPages = pagePost.getContent();
-        // List<PostDto> postDtos = postPages.stream()
-        //     .map((object)->modelMapper.map(object, PostDto.class))
-        //     .collect(Collectors.toList());
-
-        // PostResponse postResponse = new PostResponse();
-        // postResponse.setContent(postDtos);
-
-        // postResponse.setPageNumber(pagePost.getNumber());
-        // postResponse.setPageSize(pagePost.getSize());
-
-        // postResponse.setTotalElements(pagePost.getTotalElements());
-        // postResponse.setTotalPages(pagePost.getTotalPages());
-
-        // postResponse.setLastPage(pagePost.isLast());
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getPostsByCategory'");
-    }
+    
     
 }

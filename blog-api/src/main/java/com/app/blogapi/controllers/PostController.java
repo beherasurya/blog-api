@@ -57,27 +57,7 @@ public class PostController {
         return new ResponseEntity<List<PostDto>>(postDtos, HttpStatus.OK);
 
     }
-    @GetMapping("/post/user/pagination/{userId}")
-    public ResponseEntity<PostResponse> getPostsByUserIdSorting
-    (@PathVariable int userId,
-    @RequestParam(defaultValue = "0" ,required = false) int pageNumber,
-    @RequestParam(defaultValue = "5", required = false) int pageSize
-    ){
-
-        PostResponse postsByUser = postService.getPostsByUserId(userId,pageNumber,pageSize);
-        return new ResponseEntity<PostResponse>(postsByUser, HttpStatus.OK);
-    }
-
-    // @GetMapping("/post/category/pagination/{categoryId}")
-    // public ResponseEntity<PostResponse> getPostByCategoryIdSorting(
-    //     @PathVariable int categoryId,
-    //     @RequestParam(defaultValue = "0" ,required = false) int pageNumber,
-    //     @RequestParam(defaultValue = "5", required = false) int pageSize
-    //     ){
-
-    //      PostResponse postsByCategoryId = postService.getPostsByCategory(categoryId,pageNumber,pageSize);
-    //      return new ResponseEntity<PostResponse>(postsByCategoryId, HttpStatus.OK);
-    //  }
+   
 
     @PutMapping("/post/{id}")
     public ResponseEntity<PostDto> updatePost(@PathVariable int id,@RequestBody PostDto postDto){
